@@ -8,9 +8,13 @@ describe('pomodoro-edit-core', () => {
     core = new Core();
   });
   
-  it('findSymbol', () => {
-    const actual = core.findSymbol('[p99] xxx');
+  it('findTime', () => {
+    const actual = core.findTime('[p99] xxx');
     
-    expect(actual).toBeTruthy();
+    expect(actual).toBe('99');
+  });
+  
+  it('startTimer', () => {
+    return expect(core.startTimer('1')).resolves.toBeUndefined();
   });
 });
