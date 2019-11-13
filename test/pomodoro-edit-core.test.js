@@ -8,13 +8,23 @@ describe('pomodoro-edit-core', () => {
     core = new Core();
   });
   
-  it('findTime', () => {
-    const actual = core.findTime('[p99] xxx');
+  describe('findTime', () => {
+    it('can find "[p99]"', () => {
+      const actual = core.findTime('[p99] xxx');
+      
+      expect(actual).toBe('99');
+    });
     
-    expect(actual).toBe('99');
+    it('return false if no match', () => {
+      const actual = core.findTime('');
+      
+      expect(actual).toBeFalsy();
+    });
   });
   
-  it('startTimer', () => {
-    return expect(core.startTimer('1')).resolves.toBeUndefined();
+  describe('startTimer', () => {
+    it('can count one second', () => {
+      return expect(core.startTimer('1')).resolves.toBeUndefined();
+    });
   });
 });
