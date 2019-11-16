@@ -24,7 +24,19 @@ describe('pomodoro-edit-core', () => {
   
   describe('startTimer', () => {
     it('can count one second', () => {
-      return expect(core.startTimer('1')).resolves.toBeUndefined();
+      return expect(core.startTimer('1'))
+        .resolves.toBeUndefined();
+    });
+    
+    it('can count remaining time', () => {
+      expect.assertions(4);  // counts 3, 2, 1, 0
+      let expected = 3;
+      
+      function assertRemainingTime(actual) {
+        expect(actual).toBe(expected--);
+      }
+      return expect(core.startTimer('3', assertRemainingTime))
+        .resolves.toBeUndefined();
     });
   });
 });
