@@ -29,12 +29,10 @@ describe('pomodoro-edit-core', () => {
     });
     
     it('can count remaining time', () => {
-      expect.assertions(4);  // counts 3, 2, 1, 0
       let expected = 3;
       
-      function assertRemainingTime(actual) {
-        expect(actual).toBe(expected--);
-      }
+      const assertRemainingTime = actual =>
+        expect(actual).toBe(--expected);  // counts 2, 1, 0
       return expect(core.startTimer('3', assertRemainingTime))
         .resolves.toBeUndefined();
     });
