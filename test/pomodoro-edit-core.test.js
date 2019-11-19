@@ -8,16 +8,34 @@ describe('pomodoro-edit-core', () => {
     core = new Core();
   });
   
-  describe('findTime', () => {
-    it('can find "[p99]"', () => {
-      const actual = core.findTime('[p99] xxx');
-      
-      expect(actual).toBe('99');
+  describe('findPomodoroText', () => {
+    it('can find "[p99] xxx"', () => {
+      const actual = core.findPomodoroText('[p99] xxx');
+    
+      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
+    });
+    
+    it('ignores if spaces before content', () => {
+      const actual = core.findPomodoroText('[p99]  xxx');
+    
+      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
     });
     
     it('return false if no match', () => {
-      const actual = core.findTime('');
+      const actual = core.findPomodoroText('');
       
+      expect(actual).toBeFalsy();
+    });
+    
+    it('return false if empty content', () => {
+      const actual = core.findPomodoroText('[p99]');
+    
+      expect(actual).toBeFalsy();
+    });
+    
+    it('return false if empty content have next lines', () => {
+      const actual = core.findPomodoroText('[p99]\nxxx');
+    
       expect(actual).toBeFalsy();
     });
   });
