@@ -67,4 +67,14 @@ describe('pomodoro-edit-core', () => {
         .resolves.toBeUndefined();
     });
   });
+  
+  describe('stopTimer', () => {
+    it('can clear interval timer', () => {
+      core.startTimer(3);
+      
+      core.stopTimer();
+      
+      expect(core._interval).toBeNull();
+    });
+  });
 });
