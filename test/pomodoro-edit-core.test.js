@@ -15,6 +15,18 @@ describe('pomodoro-edit-core', () => {
       expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
     });
     
+    it('can find "- [p99] xxx"', () => {
+      const actual = core.findPomodoroText('- [p99] xxx');
+    
+      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
+    });
+    
+    it('can find "- [ ] [p99] xxx"', () => {
+      const actual = core.findPomodoroText('- [ ] [p99] xxx');
+    
+      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
+    });
+    
     it('ignores if spaces before content', () => {
       const actual = core.findPomodoroText('[p99]  xxx');
     
