@@ -66,6 +66,15 @@ describe('pomodoro-edit-core', () => {
       return expect(core.startTimer('3', assertRemainingTime))
         .resolves.toBeUndefined();
     });
+    
+    it.only('can clear previous interval timer if that call twice', () => {
+      jest.useFakeTimers();
+      
+      core.startTimer('1');
+      core.startTimer('1');
+      
+      expect(clearInterval).toHaveBeenCalledTimes(1);
+    });
   });
   
   describe('stopTimer', () => {
