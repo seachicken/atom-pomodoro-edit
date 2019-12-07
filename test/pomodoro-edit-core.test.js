@@ -20,7 +20,7 @@ describe('pomodoro-edit-core', () => {
             done();
           }
         });
-        jest.advanceTimersByTime(1000);
+        jest.advanceTimersByTime(60 * 1000);
       });
       
       it('can find "- [p1] xxx"', done => {
@@ -30,7 +30,7 @@ describe('pomodoro-edit-core', () => {
             done();
           }
         });
-        jest.advanceTimersByTime(1000);
+        jest.advanceTimersByTime(60 * 1000);
       });
       
       it('can find "- [ ] [p1] xxx"', done => {
@@ -40,7 +40,7 @@ describe('pomodoro-edit-core', () => {
             done();
           }
         });
-        jest.advanceTimersByTime(1000);
+        jest.advanceTimersByTime(60 * 1000);
       });
       
       it('ignores if spaces before content', done => {
@@ -50,7 +50,7 @@ describe('pomodoro-edit-core', () => {
             done();
           }
         });
-        jest.advanceTimersByTime(1000);
+        jest.advanceTimersByTime(60 * 1000);
       });
       
       it('does not reset timer if PomodoroText is the same as last time', done => {
@@ -61,17 +61,17 @@ describe('pomodoro-edit-core', () => {
           }
         });
           
-        jest.advanceTimersByTime(500);
+        jest.advanceTimersByTime(30 * 1000);
         
         core.findAndCountPomodoroText('[p1] xxx', {});
         
-        jest.advanceTimersByTime(500);
+        jest.advanceTimersByTime(30 * 1000);
       });
       
       it('reset timer if PomodoroText is the difference as last time', done => {
         core.findAndCountPomodoroText('[p1] xxx', {});
           
-        jest.advanceTimersByTime(500);
+        jest.advanceTimersByTime(30 * 1000);
         
         core.findAndCountPomodoroText('[p1] yyy', {
           finish: actual => {
@@ -80,7 +80,7 @@ describe('pomodoro-edit-core', () => {
           }
         });
         
-        jest.advanceTimersByTime(1000);
+        jest.advanceTimersByTime(60 * 1000);
       });
     });
     
@@ -90,15 +90,15 @@ describe('pomodoro-edit-core', () => {
       });
       
       it('can count remaining time', done => {
-        let expected = 2;
+        let expected = 60;
         
-        core.findAndCountPomodoroText('[p2] xxx', {
+        core.findAndCountPomodoroText('[p1] xxx', {
           interval: actual =>
-            expect(actual).toBe(--expected),  // counts 1, 0
+            expect(actual).toBe(--expected),  // counts 59, 58, ..., 0
             
           finish: () => done()
         });
-        jest.advanceTimersByTime(2 * 1000);
+        jest.advanceTimersByTime(60 * 1000);
       });
     });
     
