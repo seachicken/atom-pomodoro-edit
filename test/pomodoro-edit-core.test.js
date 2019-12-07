@@ -1,89 +1,95 @@
 import Core from '../lib/pomodoro-edit-core';
 
-var core = null;
-
 describe('pomodoro-edit-core', () => {
-  
+  let core = null;
+
   beforeEach(() => {
     core = new Core();
   });
   
-  describe('findPomodoroText', () => {
-    it('can find "[p99] xxx"', () => {
-      const actual = core.findPomodoroText('[p99] xxx');
-    
-      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
-    });
-    
-    it('can find "- [p99] xxx"', () => {
-      const actual = core.findPomodoroText('- [p99] xxx');
-    
-      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
-    });
-    
-    it('can find "- [ ] [p99] xxx"', () => {
-      const actual = core.findPomodoroText('- [ ] [p99] xxx');
-    
-      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
-    });
-    
-    it('ignores if spaces before content', () => {
-      const actual = core.findPomodoroText('[p99]  xxx');
-    
-      expect(actual).toStrictEqual({ time: '99', content: 'xxx' });
-    });
-    
-    it('return false if no match', () => {
-      const actual = core.findPomodoroText('');
+  describe('findAndCountPomodoroText', () => {
+    describe('callback finish', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
       
-      expect(actual).toBeFalsy();
-    });
-    
-    it('return false if empty content', () => {
-      const actual = core.findPomodoroText('[p99]');
-    
-      expect(actual).toBeFalsy();
-    });
-    
-    it('return false if empty content have next lines', () => {
-      const actual = core.findPomodoroText('[p99]\nxxx');
-    
-      expect(actual).toBeFalsy();
-    });
-  });
-  
-  describe('startTimer', () => {
-    it('can count one second', () => {
-      return expect(core.startTimer('1'))
-        .resolves.toBeUndefined();
-    });
-    
-    it('can count remaining time', () => {
-      let expected = 3;
+      it('can find "[p1] xxx"', done => {
+        core.findAndCountPomodoroText('[p1] xxx', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
+            done();
+          }
+        });
+        jest.advanceTimersByTime(1000);
+      });
       
-      const assertRemainingTime = actual =>
-        expect(actual).toBe(--expected);  // counts 2, 1, 0
-      return expect(core.startTimer('3', assertRemainingTime))
-        .resolves.toBeUndefined();
+      it('can find "- [p1] xxx"', done => {
+        core.findAndCountPomodoroText('- [p1] xxx', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
+            done();
+          }
+        });
+        jest.advanceTimersByTime(1000);
+      });
+      
+      it('can find "- [ ] [p1] xxx"', done => {
+        core.findAndCountPomodoroText('- [ ] [p1] xxx', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
+            done();
+          }
+        });
+        jest.advanceTimersByTime(1000);
+      });
+      
+      it('ignores if spaces before content', done => {
+        core.findAndCountPomodoroText('[p1]  xxx', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
+            done();
+          }
+        });
+        jest.advanceTimersByTime(1000);
+      });
     });
     
-    it.only('can clear previous interval timer if that call twice', () => {
-      jest.useFakeTimers();
+    describe('callback interval', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+      });
       
-      core.startTimer('1');
-      core.startTimer('1');
-      
-      expect(clearInterval).toHaveBeenCalledTimes(1);
+      it('can count remaining time', done => {
+        let expected = 2;
+        
+        core.findAndCountPomodoroText('[p2] xxx', {
+          interval: actual =>
+            expect(actual).toBe(--expected),  // counts 1, 0
+            
+          finish: () => done()
+        });
+        jest.advanceTimersByTime(2 * 1000);
+      });
     });
-  });
-  
-  describe('stopTimer', () => {
-    it('can clear interval timer', () => {
-      core.startTimer(3);
+    
+    describe('callback stop', () => {
+      it('return false if no match', done => {
+        core.findAndCountPomodoroText('', {
+          stop: () => done()
+        });
+      });
       
-      core.stopTimer();
+      it('return false if empty content', done => {
+        core.findAndCountPomodoroText('[p1]', {
+          stop: () => done()
+        });
+      });
       
-      expect(core._interval).toBeNull();
+      it('return false if empty content have next lines', done => {
+        core.findAndCountPomodoroText('[p1]\nxxx', {
+          stop: () => done()
+        });
+      });
     });
   });
 });
