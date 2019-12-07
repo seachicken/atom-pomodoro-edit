@@ -52,6 +52,36 @@ describe('pomodoro-edit-core', () => {
         });
         jest.advanceTimersByTime(1000);
       });
+      
+      it('does not reset timer if PomodoroText is the same as last time', done => {
+        core.findAndCountPomodoroText('[p1] xxx', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
+            done();
+          }
+        });
+          
+        jest.advanceTimersByTime(500);
+        
+        core.findAndCountPomodoroText('[p1] xxx', {});
+        
+        jest.advanceTimersByTime(500);
+      });
+      
+      it('reset timer if PomodoroText is the difference as last time', done => {
+        core.findAndCountPomodoroText('[p1] xxx', {});
+          
+        jest.advanceTimersByTime(500);
+        
+        core.findAndCountPomodoroText('[p1] yyy', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'yyy' });
+            done();
+          }
+        });
+        
+        jest.advanceTimersByTime(1000);
+      });
     });
     
     describe('callback interval', () => {
