@@ -8,9 +8,6 @@
     "test": "jest",
     "test-watch": "jest --watch"
   },
-  "activationCommands": {
-    "atom-workspace": "pomodoro-edit:toggle"
-  },
   "repository": "https://github.com/atom/pomodoro-edit",
   "license": "MIT",
   "engines": {
