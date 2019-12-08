@@ -1,14 +1,14 @@
 {
-  "name": "pomodoro-edit",
+  "name": "atom-pomodoro-edit",
   "main": "./lib/pomodoro-edit",
-  "version": "0.0.0",
-  "description": "A short description of your package",
+  "version": "0.1.0",
+  "description": "Pomodoro timer for Atom",
   "keywords": [],
   "scripts": {
     "test": "jest",
     "test-watch": "jest --watch"
   },
-  "repository": "https://github.com/atom/pomodoro-edit",
+  "repository": "https://github.com/seachicken/atom-pomodoro-edit",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
