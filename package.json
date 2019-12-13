@@ -1,7 +1,7 @@
 {
   "name": "atom-pomodoro-edit",
   "main": "./lib/pomodoro-edit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pomodoro timer for Atom",
   "keywords": [],
   "scripts": {
