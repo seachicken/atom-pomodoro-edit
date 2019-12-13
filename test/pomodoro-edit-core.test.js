@@ -33,8 +33,28 @@ describe('pomodoro-edit-core', () => {
         jest.advanceTimersByTime(60 * 1000);
       });
       
+      test('can find "  - [p1] xxx"', done => {
+        core.findAndCountPomodoroText('  - [p1] xxx', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
+            done();
+          }
+        });
+        jest.advanceTimersByTime(60 * 1000);
+      });
+      
       test('can find "- [ ] [p1] xxx"', done => {
         core.findAndCountPomodoroText('- [ ] [p1] xxx', {
+          finish: actual => {
+            expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
+            done();
+          }
+        });
+        jest.advanceTimersByTime(60 * 1000);
+      });
+      
+      test('can find "  - [ ] [p1] xxx"', done => {
+        core.findAndCountPomodoroText('  - [ ] [p1] xxx', {
           finish: actual => {
             expect(actual).toStrictEqual({ time: '1', content: 'xxx' });
             done();
