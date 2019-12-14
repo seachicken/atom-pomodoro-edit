@@ -1,4 +1,4 @@
-# Pomodoro Edit for Atom
+# <img src=".github/logo.png" align="right" width="100"> Pomodoro Edit for Atom
 
 ## Installation
 
