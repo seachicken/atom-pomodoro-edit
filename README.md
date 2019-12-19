@@ -1,4 +1,4 @@
-# <img src=".github/logo.png" align="right" width="100"> Pomodoro Edit for Atom
+# <img src="https://raw.githubusercontent.com/seachicken/pomodoro-edit-core/master/.github/logo.png" align="right" width="100"> Pomodoro Edit for Atom
 
 ## Installation
 

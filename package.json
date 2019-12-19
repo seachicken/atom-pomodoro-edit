@@ -4,10 +4,6 @@
   "version": "0.1.2",
   "description": "Pomodoro timer for Atom",
   "keywords": [],
-  "scripts": {
-    "test": "jest",
-    "test-watch": "jest --watch"
-  },
   "repository": "https://github.com/seachicken/atom-pomodoro-edit",
   "license": "MIT",
   "engines": {
@@ -15,12 +11,7 @@
   },
   "dependencies": {
     "moment": "^2.24.0",
-    "moment-duration-format": "^2.3.2"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0"
+    "moment-duration-format": "^2.3.2",
+    "pomodoro-edit-core": "^0.1.0"
   }
 }
